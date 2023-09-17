@@ -1,0 +1,110 @@
+[tool.poetry]
+name = "pkgname"
+version = "0.1.0"
+description = "Template package build upon poetry."
+authors = ["David Lores <d.r.lores.sci@gmail.com>"]
+maintainers = [
+    "David Lores <d.r.lores.sci@gmail.com>"
+]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "pkgname", from = "src" }]
+include = [{ path = "tests", format = "sdist" }]
+# homepage = "https://python-poetry.org/"
+repository = "https://github.com/drlores96/poetry-template.git"
+# documentation = "https://python-poetry.org/docs"
+# keywords = ["packaging", "dependency", "poetry"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+# [tool.poetry.urls]
+# Changelog = "https://python-poetry.org/history/"
+
+# Requirements
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = ">=2.6"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.1"
+pytest-cov = "^4.0"
+
+[tool.poetry.group.typing.dependencies]
+mypy = ">=1.0"
+
+# # only used in github actions
+# [tool.poetry.group.github-actions]
+# optional = true
+# [tool.poetry.group.github-actions.dependencies]
+# pytest-github-actions-annotate-failures = "^0.1.7"
+
+# [tool.poetry.scripts]
+# poetry = "poetry.console.application:main"
+
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+show-fixes = true
+target-version = "py38" 
+line-length = 88 # Same as black
+extend-select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "ERA", # flake8-eradicate/eradicate
+    "I",   # isort
+    "N",   # pep8-naming
+    "PIE", # flake8-pie
+    "PGH", # pygrep
+    "RUF", # ruff checks
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.isort]
+force-single-line = true
+lines-between-types = 1
+lines-after-imports = 2
+known-first-party = ["pkgname"]
+required-imports = ["from __future__ import annotations"]
+
+
+[tool.black]
+target-version = ['py38', 'py39', 'py310', 'py311']
+preview = true
+
+
+[tool.mypy]
+files = "src, tests"
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
+show_error_codes = true
+strict = true
+
+
+[tool.pytest.ini_options]
+addopts = "-n auto"
+testpaths = ["tests"]
+
+
+[tool.coverage.report]
+exclude_lines = [
+    "if TYPE_CHECKING:"
+]
